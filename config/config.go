@@ -89,7 +89,7 @@ func modifyRequest(origin *url.URL) func(req *http.Request) {
 		req.Header.Add("X-Forwarded-Host", req.Host)
 		req.Header.Add("X-Origin-Host", origin.Host)
 		req.Header.Del("Accept-Encoding")
-		req.URL.Scheme = "http"
+		req.URL.Scheme = origin.Scheme
 		req.URL.Host = origin.Host
 	}
 }
