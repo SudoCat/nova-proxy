@@ -3,9 +3,10 @@ package main
 import (
 	"log"
 	"net/http"
+	"crypto/tls"
 	"os"
 
-	"github.com/ara-framework/nova-proxy/config"
+	"github.com/sudocat/nova-proxy/config"
 	"github.com/gookit/color"
 )
 
@@ -15,6 +16,9 @@ func init() {
 }
 
 func main() {
+	skipTlsVerify := os.Getenv("SKIP_TLS_VERIFY")
+	insecureSkipVerify := skipTlsVerify == "true"
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: insecureSkipVerify}
 	config.SetUpLocations()
 
 	port := os.Getenv("PORT")
